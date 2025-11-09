@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = { "https://vamsi-event.vercel.app", "http://localhost:5173" })
@@ -135,7 +134,8 @@ public class ParticipantController {
             payload.put("name", p.getName());
             payload.put("email", p.getEmail());
             payload.put("exp", Instant.now().plusSeconds(3600).toString());
-            if (p.getEventId() != null) payload.put("eventId", p.getEventId());
+            if (p.getEventId() != null)
+                payload.put("eventId", p.getEventId());
 
             String png = qrService.generateQr(payload);
             p.setEntryPassQRCode(png);
@@ -153,7 +153,7 @@ public class ParticipantController {
         }
     }
 
-@GetMapping("/participants/search")
+    @GetMapping("/participants/search")
     public ResponseEntity<?> search(
             @RequestParam(value = "email", required = false) String email,
             @RequestParam(value = "name", required = false) String name) {
@@ -161,7 +161,7 @@ public class ParticipantController {
         try {
             // ---- 1. validation -------------------------------------------------
             boolean hasEmail = email != null && !email.trim().isEmpty();
-            boolean hasName  = name  != null && !name.trim().isEmpty();
+            boolean hasName = name != null && !name.trim().isEmpty();
 
             if (!hasEmail && !hasName) {
                 return ResponseEntity.badRequest()
@@ -170,7 +170,7 @@ public class ParticipantController {
 
             // ---- 2. build safe regexes -----------------------------------------
             String emailRegex = hasEmail ? ".*" + Pattern.quote(email.trim()) + ".*" : null;
-            String nameRegex  = hasName  ? ".*" + Pattern.quote(name.trim())  + ".*" : null;
+            String nameRegex = hasName ? ".*" + Pattern.quote(name.trim()) + ".*" : null;
 
             // ---- 3. pick the right repository call -----------------------------
             Optional<Participant> participant;
@@ -182,15 +182,15 @@ public class ParticipantController {
                 participant = repo.findFirstByNameRegex(nameRegex);
             }
 
-            return ResponseEntity.ok(Map.of("participant", participant.orElse(null)));
+            return ResponseEntity.ok(
+                    java.util.Collections.singletonMap("participant", participant.orElse(null)));
 
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500)
                     .body(Map.of(
                             "error", "server error",
-                            "detail", e.getMessage() != null ? e.getMessage() : e.toString()
-                    ));
+                            "detail", e.getMessage() != null ? e.getMessage() : e.toString()));
         }
     }
 }
