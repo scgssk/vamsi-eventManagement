@@ -1,19 +1,23 @@
+# ---- Build Stage ----
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-COPY pom.xml .
-COPY mvnw .
-COPY mvnw.cmd .
-COPY .mvn/ .mvn/
+# Copy entire project (no caching)
+COPY . .
 
-RUN chmod +x mvnw
-RUN ./mvnw dependency:go-offline -B
+# Build the Spring Boot jar (skip tests to speed up)
+RUN mvn clean package -DskipTests
 
-COPY src ./src
-RUN ./mvnw clean package -DskipTests -B
-
+# ---- Runtime Stage ----
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
+
+# Copy built JAR from the build stage
 COPY --from=build /app/target/*.jar app.jar
-EXPOSE $PORT
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Expose Render’s dynamic port
+ENV PORT=8001
+EXPOSE 8001
+
+# Run Spring Boot app
+CMD ["sh", "-c", "java -jar app.jar --server.port=${PORT}"]
