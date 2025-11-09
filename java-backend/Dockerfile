@@ -6,7 +6,7 @@ WORKDIR /build
 COPY . .
 
 # Explicitly point Maven to the pom.xml file
-RUN mvn -f /build/pom.xml clean package -DskipTests
+RUN mvn -f /build/pom.xml clean package spring-boot:repackage -DskipTests
 
 # ---- Runtime Stage ----
 FROM eclipse-temurin:17-jre-alpine
