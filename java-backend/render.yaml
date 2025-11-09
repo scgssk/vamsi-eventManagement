@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: vamsibackend
+    env: java
+    buildCommand: ./mvnw spring-boot:build-image
+    startCommand: java -jar target/event-backend-1.0.0.jar
+    envVars:
+      MONGO_URI: mongodb+srv://eventmanager:eventmanagereec@cluster0.iatuq3u.mongodb.net/?appName=Cluster0
+      PY_QR_SERVICE: https://vamsiqrapi.onrender.com
+      QR_SHARED_SECRET: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30
+      ADMIN_ID: admin
+      ADMIN_PASS: devkey
+      ADMIN_API_KEY: devkey

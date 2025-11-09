@@ -34,7 +34,8 @@ export default function EntryPass() {
       if (res.data.participant) {
         setParticipant(res.data.participant);
         if (res.data.participant.approved) {
-          await generateEntryPass(res.data.participant._id);
+          // backend returns `id` (not `_id`) from Spring Data - use that
+          await generateEntryPass(res.data.participant.id);
         }
       } else {
         setError('No registration found. Please check your details.');

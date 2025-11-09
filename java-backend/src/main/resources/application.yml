@@ -1,0 +1,15 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
+
+app:
+  qr-service-url: ${PY_QR_SERVICE}
+  qr-secret: ${QR_SHARED_SECRET}
+  admin-id: ${ADMIN_ID}
+  admin-pass: ${ADMIN_PASS}
+  admin-api-key: ${ADMIN_API_KEY:devkey}
+  session-ttl-ms: 28800000  # 8 hours

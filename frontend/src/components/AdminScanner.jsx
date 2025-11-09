@@ -79,7 +79,8 @@ export default function AdminScanner() {
     if (!participant || participant.approved) return;
     try {
       await axios.patch(
-        `${import.meta.env.VITE_API_URL}/participants/${participant._id}/approve`,
+        // backend uses `id` as the identifier field (Spring Data maps @Id to `id`)
+        `${import.meta.env.VITE_API_URL}/participants/${participant.id}/approve`,
         {},
         { headers: { 'x-admin-token': token } }
       );

@@ -9,7 +9,7 @@ from io import BytesIO
 import base64
 
 app = Flask(__name__)
-QR_SHARED_SECRET = os.environ.get('QR_SHARED_SECRET', 'default-secret')
+QR_SHARED_SECRET = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30"
 
 def verify(signed):
     payload = signed.get('payload')
