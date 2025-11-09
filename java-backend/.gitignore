@@ -1,5 +1,5 @@
+# .gitignore — ONLY ignore build output
 target/
 *.jar
-.idea/
-*.iml
+*.log
 .env
