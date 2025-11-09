@@ -35,7 +35,7 @@ function Navbar() {
             <path d="M2 12l10 5 10-5" />
           </svg>
         </div>
-        <h1 style={styles.brand}>College Event Portal</h1>
+        <h1 style={styles.brand}>Smart QR Pass</h1>
       </div>
 
       <nav style={styles.navLinks}>
@@ -88,7 +88,7 @@ export default function App() {
         {/* Subtle Footer */}
         <footer style={styles.footer}>
           <p style={styles.footerText}>
-            © 2025 College Event Portal. All rights reserved.
+            © 2025 Smart QR Pass. All rights reserved.
           </p>
         </footer>
       </div>
